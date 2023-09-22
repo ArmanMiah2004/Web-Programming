@@ -30,11 +30,11 @@ pinForm.addEventListener("submit", function (e) {
         const userData = retrieveUserData();
 
         if (userData[username]) {
-            message.textContent = "Username already exists. Please enter your existing PIN.";
+            message.textContent = "Registration Successful! You can now use your existing PIN to log in.";
             pinInput.value = ""; // Clear the input field
         } else {
             storeUserData(username, enteredPIN);
-            message.textContent = "Registration successful! You can now use your new PIN to log in.";
+            message.textContent = "Registration Successful! You can now use your new PIN to log in.";
             pinInput.value = ""; // Clear the input field
             registrationModeInput.value = "false"; // Switch back to login mode
         }
@@ -44,6 +44,7 @@ pinForm.addEventListener("submit", function (e) {
         const storedPIN = userData[username];
 
         if (storedPIN === enteredPIN) {
+            message.textContent = "Login Successful!";
             // Redirect to your main website page or unlock the content
             window.location.href = "main.html"; // Replace "main.html" with your actual main page URL
         } else {
