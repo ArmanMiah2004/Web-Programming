@@ -4,7 +4,7 @@
     <title>Enter PIN</title>
 </head>
 <body>
-    <h1>EduProgress</h1>
+    <h1>Welcome to Your Website</h1>
     <div id="modeToggle">
         <button id="registerButton">Register</button>
         <button id="loginButton">Login</button>
@@ -35,6 +35,12 @@
             localStorage.setItem('userData', JSON.stringify(userData));
         }
 
+        // Function to check if a username already exists
+        function usernameExists(username) {
+            const userData = retrieveUserData();
+            return userData.hasOwnProperty(username);
+        }
+
         // Function to retrieve user data from local storage
         function retrieveUserData() {
             return JSON.parse(localStorage.getItem('userData')) || {};
@@ -62,12 +68,9 @@
             const registrationMode = registrationModeInput.value === "true";
 
             if (registrationMode) {
-                // Registration mode: Create a new username and PIN
-                const userData = retrieveUserData();
-
-                if (userData[username]) {
-                    message.textContent = "Registration Successful! You can now use your existing PIN to log in.";
-                    pinInput.value = ""; // Clear the input field
+                // Registration mode: Check if the username already exists
+                if (usernameExists(username)) {
+                    message.textContent = "This username is already registered. Please choose a different username.";
                 } else {
                     storeUserData(username, enteredPIN);
                     message.textContent = "Registration Successful! You can now use your new PIN to log in.";
