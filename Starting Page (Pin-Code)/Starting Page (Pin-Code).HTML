@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Enter PIN</title>
+    <title>EduSuccessMap</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Your Website</h1>
+    <img src="EduSuccessMap.png" alt="EduSuccessMap Logo">
     <div id="modeToggle">
         <button id="registerButton">Register</button>
         <button id="loginButton">Login</button>
@@ -16,10 +26,7 @@
         <button type="submit">Submit</button>
     </form>
     <p id="message"></p>
-
     <script>
-
-        // Get form and message elements
         const pinForm = document.getElementById("pinForm");
         const usernameInput = document.getElementById("usernameInput");
         const pinInput = document.getElementById("pinInput");
@@ -28,25 +35,21 @@
         const registerButton = document.getElementById("registerButton");
         const loginButton = document.getElementById("loginButton");
 
-        // Function to store user data in local storage
         function storeUserData(username, pin) {
             const userData = JSON.parse(localStorage.getItem('userData')) || {};
             userData[username] = pin;
             localStorage.setItem('userData', JSON.stringify(userData));
         }
 
-        // Function to check if a username already exists
         function usernameExists(username) {
             const userData = retrieveUserData();
             return userData.hasOwnProperty(username);
         }
 
-        // Function to retrieve user data from local storage
         function retrieveUserData() {
             return JSON.parse(localStorage.getItem('userData')) || {};
         }
 
-        // Add event listeners to toggle between registration and login modes
         registerButton.addEventListener("click", function () {
             pinForm.style.display = "block";
             registrationModeInput.value = "true";
@@ -59,35 +62,30 @@
             message.textContent = "Enter your login credentials.";
         });
 
-        // Add an event listener to the form for PIN submission
         pinForm.addEventListener("submit", function (e) {
-            e.preventDefault(); // Prevent the form from submitting normally
-
+            e.preventDefault();
             const username = usernameInput.value;
             const enteredPIN = pinInput.value;
             const registrationMode = registrationModeInput.value === "true";
 
             if (registrationMode) {
-                // Registration mode: Check if the username already exists
                 if (usernameExists(username)) {
                     message.textContent = "This username is already registered. Please choose a different username.";
                 } else {
                     storeUserData(username, enteredPIN);
                     message.textContent = "Registration Successful! You can now use your new PIN to log in.";
-                    pinInput.value = ""; // Clear the input field
+                    pinInput.value = "";
                 }
             } else {
-                // Login mode: Check if the username and PIN match
                 const userData = retrieveUserData();
                 const storedPIN = userData[username];
 
-                if (storedPIN == enteredPIN) { // Use loose equality comparison
+                if (storedPIN == enteredPIN) {
                     message.textContent = "Login Successful!";
-                    // Redirect to your main website page or unlock the content
-                    window.location.href = "main.html"; // Replace "main.html" with your actual main page URL
+                    window.location.href = "main.html";
                 } else {
                     message.textContent = "Incorrect username or PIN. Please try again.";
-                    pinInput.value = ""; // Clear the input field
+                    pinInput.value = "";
                 }
             }
         });
