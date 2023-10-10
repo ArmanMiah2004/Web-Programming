@@ -11,19 +11,74 @@
             height: 100vh;
             margin: 0;
         }
+
+        button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 150px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        form {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: opacity 0.3s ease;
+            display: block;
+        }
+
+        #submitBtn, #backButton {
+            padding: 5px 10px;
+            width: 100px;
+        }
+
+        #backButton {
+            background-color: #555;
+        }
+
+        #backButton:hover {
+            background-color: #777;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
     <img src="EduSuccessMap.png" alt="EduSuccessMap Logo">
-    <div id="modeToggle">
+    <div id="modeToggle" class="button-container">
         <button id="registerButton">Register</button>
         <button id="loginButton">Login</button>
     </div>
     <form id="pinForm" style="display: none;">
-        <input type="text" id="usernameInput" placeholder="Enter username" required>
-        <input type="password" id="pinInput" maxlength="4" placeholder="Enter 4-digit PIN" required>
+        <div style="margin-top: 20px;"></div>
+        <input type="text" id="usernameInput" placeholder="Enter username" required><br>
+        <input type="password" id="pinInput" maxlength="4" placeholder="Enter 4-digit PIN" required><br>
+        <div class="button-container">
+            <button type="submit" id="backButton">Back</button>
+            <button type="submit" id="submitBtn">Submit</button>
+        </div>
         <input type="hidden" id="registrationMode" value="true">
-        <button type="submit">Submit</button>
     </form>
     <p id="message"></p>
     <script>
@@ -34,6 +89,7 @@
         const message = document.getElementById("message");
         const registerButton = document.getElementById("registerButton");
         const loginButton = document.getElementById("loginButton");
+        const backButton = document.getElementById("backButton");
 
         function storeUserData(username, pin) {
             const userData = JSON.parse(localStorage.getItem('userData')) || {};
@@ -54,12 +110,30 @@
             pinForm.style.display = "block";
             registrationModeInput.value = "true";
             message.textContent = "Enter your details to register a new account.";
+
+            loginButton.style.display = "none";
+            backButton.style.display = "block";
         });
 
         loginButton.addEventListener("click", function () {
             pinForm.style.display = "block";
             registrationModeInput.value = "false";
             message.textContent = "Enter your login credentials.";
+
+            registerButton.style.display = "none";
+            backButton.style.display = "block";
+        });
+
+        backButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            pinForm.style.display = "none";
+            usernameInput.value = "";
+            pinInput.value = "";
+            message.textContent = "";
+
+            registerButton.style.display = "block";
+            loginButton.style.display = "block";
+            backButton.style.display = "none";
         });
 
         pinForm.addEventListener("submit", function (e) {
