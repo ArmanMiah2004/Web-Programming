@@ -170,4 +170,13 @@
 
                 if (storedPIN == enteredPIN) {
                     message.textContent = "Login Successful!";
-                    window.location.href
+                    window.location.href = "main.html";
+                } else {
+                    message.textContent = "Incorrect username or PIN. Please try again.";
+                    pinInput.value = "";
+                }
+            }
+        });
+    </script>
+</body>
+</html>
