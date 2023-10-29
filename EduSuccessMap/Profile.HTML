@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
     <style>
         body {
@@ -38,38 +40,29 @@
             background-color: white;
             color: #000000;
         }
-        form {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
+        .question {
+            display: none;
         }
-        input[type="text"],
-        input[type="number"],
-        input[type="file"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
+        .question.active {
+            display: block; 
         }
-        input[type="submit"] {
-            background-color: #000000;
-            color: white;
-            padding: 10px 15px;
+        .button {
+            padding: 10px 20px;
+            margin: 5px;
             border: none;
-            border-radius: 20px;
+            background-color: #1DA1F2;
+            color: white;
+            border-radius: 5px;
             cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s;
         }
-        input[type="submit"]:hover {
-            background-color: #333333;
+        .button.selected {
+            background-color: #004B8D;
         }
-        label {
-            margin-bottom: 5px;
-            display: block;
+        .button-row {
+            margin-top: 10px;
+        }
+        #submit-button {
+            display: none;
         }
     </style>
 </head>
@@ -85,32 +78,105 @@
             <a href="profile.html">Profile</a>
         </div>
     </div>
-    <form action="submit-profile.php" method="post" enctype="multipart/form-data">
-        <label for="full-name">What is your full name?</label>
-        <input type="text" id="full-name" name="full_name" required>
 
-        <label for="age">How old are you?</label>
-        <input type="number" id="age" name="age" required>
+    <form id="profileForm" action="submit-profile.php" method="post" enctype="multipart/form-data">
+        <div class="question active" id="q1">
+            <label for="first-name">First Name:</label>
+            <input type="text" id="first-name" name="first_name" required>
+            
+            <label for="last-name">Last Name:</label>
+            <input type="text" id="last-name" name="last_name" required>
+            
+            <button type="button" class="button" onclick="showQuestion(2)">Next</button>
+        </div>
 
-        <label for="degree">What Degree are you studying?</label>
-        <input type="text" id="degree" name="degree" required>
+        <div class="question" id="q2">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" min="18" required>
+            
+            <button type="button" class="button" onclick="showQuestion(1)">Back</button>
+            <button type="button" class="button" onclick="showQuestion(3)">Next</button>
+        </div>
 
-        <label for="year">What Year are you currently in?</label>
-        <input type="text" id="year" name="year" required>
+        <div class="question" id="q3">
+            <label for="degree">What Degree are you studying?</label>
+            <input type="text" id="degree" name="degree" required>
+            
+            <button type="button" class="button" onclick="showQuestion(2)">Back</button>
+            <button type="button" class="button" onclick="showQuestion(4)">Next</button>
+        </div>
 
-        <label>Are you in your 1st or 2nd semester?</label>
-        <input type="text" name="semester" required>
+        <div class="question" id="q4">
+            <label>What Year are you currently in?</label>
+            <div class="button-row">
+                <button type="button" class="button year" onclick="selectOption('year', 1)">1</button>
+                <button type="button" class="button year" onclick="selectOption('year', 2)">2</button>
+                <button type="button" class="button year" onclick="selectOption('year', 3)">3</button>
+                <button type="button" class="button year" onclick="selectOption('year', 4)">4</button>
+                <button type="button" class="button year" onclick="selectOption('year', 5)">5</button>
+            </div>
+            <input type="hidden" id="year" name="year" required>
+            
+            <button type="button" class="button" onclick="showQuestion(3)">Back</button>
+            <button type="button" class="button" onclick="showQuestion(5)">Next</button>
+        </div>
 
-        <label for="courses">Name your 4 courses you are studying this semester:</label>
-        <input type="text" id="course1" name="course1" placeholder="Course 1" required>
-        <input type="text" id="course2" name="course2" placeholder="Course 2" required>
-        <input type="text" id="course3" name="course3" placeholder="Course 3" required>
-        <input type="text" id="course4" name="course4" placeholder="Course 4" required>
+        <div class="question" id="q5">
+            <label>Are you in your 1st or 2nd semester?</label>
+            <div class="button-row">
+                <button type="button" class="button semester" onclick="selectOption('semester', 1)">1</button>
+                <button type="button" class="button semester" onclick="selectOption('semester', 2)">2</button>
+            </div>
+            <input type="hidden" id="semester" name="semester" required>
+            
+            <button type="button" class="button" onclick="showQuestion(4)">Back</button>
+            <button type="button" class="button" onclick="showQuestion(6)">Next</button>
+        </div>
 
-        <label for="profile-pic">Would you like to upload a profile picture?</label>
-        <input type="file" id="profile-pic" name="profile_picture" accept="image/png, image/jpeg">
-        
-        <input type="submit" value="Submit">
+        <div class="question" id="q6">
+            <label for="courses">Name your 4 courses you are studying this semester:</label>
+            <input type="text" id="course1" name="course1" placeholder="Course 1" required>
+            <input type="text" id="course2" name="course2" placeholder="Course 2" required>
+            <input type="text" id="course3" name="course3" placeholder="Course 3" required>
+            <input type="text" id="course4" name="course4" placeholder="Course 4" required>
+            
+            <button type="button" class="button" onclick="showQuestion(5)">Back</button>
+            <button type="button" class="button" onclick="showQuestion(7)">Next</button>
+        </div>
+
+        <div class="question" id="q7">
+            <label for="profile-pic">Would you like to upload a profile picture?</label>
+            <input type="file" id="profile-pic" name="profile_picture" accept="image/png, image/jpeg">
+            <label>
+                <input type="checkbox" name="later" value="later"> Add later
+            </label>
+            
+            <button type="button" class="button" onclick="showQuestion(6)">Back</button>
+            <input type="submit" class="button" value="Submit">
+        </div>
     </form>
+
+    <script>
+        function showQuestion(number) {
+            var questions = document.querySelectorAll('.question');
+            for (var i = 0; i < questions.length; i++) {
+                questions[i].classList.remove('active');
+            }
+            var questionToShow = document.getElementById('q' + number);
+            questionToShow.classList.add('active');
+        }
+
+        function selectOption(field, value) {
+            var hiddenInput = document.getElementById(field);
+            hiddenInput.value = value;
+            var buttons = document.querySelectorAll('.' + field);
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('selected');
+                if (parseInt(buttons[i].getAttribute('onclick').match(/\d+/)) === value) {
+                    buttons[i].classList.add('selected');
+                }
+            }
+        }
+    </script>
 </body>
 </html>
