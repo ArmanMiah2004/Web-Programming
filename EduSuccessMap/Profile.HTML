@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <style>
+        body {
+            background-color: #afafaf;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        input[type="submit"] {
+            background-color: #000000;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background-color: #333333;
+        }
+        label {
+            margin-bottom: 5px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <form action="submit-profile.php" method="post" enctype="multipart/form-data">
+        <label for="full-name">What is your full name?</label>
+        <input type="text" id="full-name" name="full_name" required>
+
+        <label for="age">How old are you?</label>
+        <input type="number" id="age" name="age" required>
+
+        <label for="degree">What Degree are you studying?</label>
+        <input type="text" id="degree" name="degree" required>
+
+        <label for="year">What Year are you currently in?</label>
+        <input type="text" id="year" name="year" required>
+
+        <label>Are you in your 1st or 2nd semester?</label>
+        <input type="text" name="semester" required>
+
+        <label for="courses">Name your 4 courses you are studying this semester:</label>
+        <input type="text" id="course1" name="course1" placeholder="Course 1" required>
+        <input type="text" id="course2" name="course2" placeholder="Course 2" required>
+        <input type="text" id="course3" name="course3" placeholder="Course 3" required>
+        <input type="text" id="course4" name="course4" placeholder="Course 4" required>
+
+        <label for="profile-pic">Would you like to upload a profile picture?</label>
+        <input type="file" id="profile-pic" name="profile_picture" accept="image/png, image/jpeg">
+        
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
