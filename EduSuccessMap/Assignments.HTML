@@ -125,9 +125,10 @@
                     courseDiv.appendChild(addButton);
                     container.appendChild(courseDiv);
                 });
+                loadAssignments();
             }
         }
-
+    
         function addAssignment(courseIndex) {
             var courseDiv = document.getElementById('course' + courseIndex);
             var assignmentInput = createInput('Assignment Description', 'text');
@@ -135,11 +136,18 @@
             var percentageInput = createInput('Percentage', 'number');
             var achievedMarksInput = createInput('Achieved Marks', 'number');
             var totalMarksInput = createInput('Total Marks', 'number');
+            var completedCheckbox = document.createElement('input');
+            completedCheckbox.type = 'checkbox';
+            completedCheckbox.className = 'assignment-completed';
+            completedCheckbox.onchange = saveAssignments;
             var deleteButton = document.createElement('button');
             deleteButton.className = 'delete-assignment';
             deleteButton.textContent = '🗑️';
-            deleteButton.onclick = function() { courseDiv.removeChild(assignmentDiv); };
-
+            deleteButton.onclick = function() { 
+                courseDiv.removeChild(assignmentDiv); 
+                saveAssignments();
+            };
+    
             var assignmentDiv = document.createElement('div');
             assignmentDiv.className = 'assignment';
             assignmentDiv.appendChild(assignmentInput);
@@ -147,10 +155,12 @@
             assignmentDiv.appendChild(percentageInput);
             assignmentDiv.appendChild(achievedMarksInput);
             assignmentDiv.appendChild(totalMarksInput);
+            assignmentDiv.appendChild(completedCheckbox);
             assignmentDiv.appendChild(deleteButton);
             courseDiv.appendChild(assignmentDiv);
+            saveAssignments();
         }
-
+    
         function createInput(placeholder, type) {
             var input = document.createElement('input');
             input.type = type;
@@ -158,8 +168,77 @@
             input.className = 'assignment-input';
             return input;
         }
-
+    
+        function saveAssignments() {
+            var assignments = {};
+            var courses = document.querySelectorAll('.course-container');
+            courses.forEach(function(course, index) {
+                var courseAssignments = [];
+                var assignmentDivs = course.querySelectorAll('.assignment');
+                assignmentDivs.forEach(function(div) {
+                    var inputs = div.querySelectorAll('input');
+                    var assignment = {
+                        description: inputs[0].value,
+                        dueDate: inputs[1].value,
+                        percentage: inputs[2].value,
+                        achievedMarks: inputs[3].value,
+                        totalMarks: inputs[4].value,
+                        completed: inputs[5].checked
+                    };
+                    courseAssignments.push(assignment);
+                });
+                assignments['course' + index] = courseAssignments;
+            });
+            localStorage.setItem('assignments', JSON.stringify(assignments));
+        }
+    
+        function loadAssignments() {
+            var savedAssignments = localStorage.getItem('assignments');
+            if (savedAssignments) {
+                var assignments = JSON.parse(savedAssignments);
+                for (var courseId in assignments) {
+                    var courseDiv = document.getElementById(courseId);
+                    if (courseDiv) {
+                        assignments[courseId].forEach(function(assignment) {
+                            var assignmentDiv = document.createElement('div');
+                            assignmentDiv.className = 'assignment';
+                            var assignmentInput = createInput('Assignment Description', 'text');
+                            assignmentInput.value = assignment.description;
+                            var dueDateInput = createInput('Due Date', 'date');
+                            dueDateInput.value = assignment.dueDate;
+                            var percentageInput = createInput('Percentage', 'number');
+                            percentageInput.value = assignment.percentage;
+                            var achievedMarksInput = createInput('Achieved Marks', 'number');
+                            achievedMarksInput.value = assignment.achievedMarks;
+                            var totalMarksInput = createInput('Total Marks', 'number');
+                            totalMarksInput.value = assignment.totalMarks;
+                            var completedCheckbox = document.createElement('input');
+                            completedCheckbox.type = 'checkbox';
+                            completedCheckbox.className = 'assignment-completed';
+                            completedCheckbox.checked = assignment.completed;
+                            completedCheckbox.onchange = saveAssignments;
+                            var deleteButton = document.createElement('button');
+                            deleteButton.className = 'delete-assignment';
+                            deleteButton.textContent = '🗑️';
+                            deleteButton.onclick = function() { 
+                                courseDiv.removeChild(assignmentDiv); 
+                                saveAssignments();
+                            };
+                            assignmentDiv.appendChild(assignmentInput);
+                            assignmentDiv.appendChild(dueDateInput);
+                            assignmentDiv.appendChild(percentageInput);
+                            assignmentDiv.appendChild(achievedMarksInput);
+                            assignmentDiv.appendChild(totalMarksInput);
+                            assignmentDiv.appendChild(completedCheckbox);
+                            assignmentDiv.appendChild(deleteButton);
+                            courseDiv.appendChild(assignmentDiv);
+                        });
+                    }
+                }
+            }
+        }
+    
         window.onload = loadCourses;
-    </script>
+    </script>    
 </body>
 </html>
