@@ -64,21 +64,32 @@
 
     <div class="image-upload-container">
         <label for="imageUpload">Upload Your TimeTable</label><br>
-        <input type="file" id="imageUpload" accept="image/*" onchange="displayImage(this)">
+        <input type="file" id="imageUpload" accept="image/*" onchange="handleImageUpload(this)">
         <img id="timetableImage" class="timetable-image" />
     </div>
 
     <script>
-        function displayImage(input) {
+        function handleImageUpload(input) {
             var file = input.files[0];
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    document.getElementById('timetableImage').src = e.target.result;
+                    var imageUrl = e.target.result;
+                    document.getElementById('timetableImage').src = imageUrl;
+                    localStorage.setItem('timetableImage', imageUrl);
                 };
                 reader.readAsDataURL(file);
             }
         }
+
+        function loadSavedImage() {
+            var savedImage = localStorage.getItem('timetableImage');
+            if (savedImage) {
+                document.getElementById('timetableImage').src = savedImage;
+            }
+        }
+
+        window.onload = loadSavedImage;
     </script>
 </body>
 </html>
