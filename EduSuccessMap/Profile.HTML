@@ -177,7 +177,7 @@
             }
             document.getElementById('q' + number).classList.add('active');
         }
-
+    
         function selectOption(field, value) {
             var buttons = document.querySelectorAll('.button.' + field);
             buttons.forEach(function(button) {
@@ -189,10 +189,10 @@
                 selectedButton.classList.add('selected');
             }
         }
-
+    
         function displayProfileSummary() {
             event.preventDefault();
-
+    
             var firstName = document.getElementById('first-name').value;
             var lastName = document.getElementById('last-name').value;
             var age = document.getElementById('age').value;
@@ -205,13 +205,33 @@
                 document.getElementById('course3').value,
                 document.getElementById('course4').value
             ];
-
+    
+            saveAndDisplayData(firstName, lastName, age, degree, year, semester, courses);
+    
+            return false;
+        }
+    
+        function saveAndDisplayData(firstName, lastName, age, degree, year, semester, courses) {
+            localStorage.setItem('profileData', JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                age: age,
+                degree: degree,
+                year: year,
+                semester: semester,
+                courses: courses
+            }));
+    
+            updateProfileSummary(firstName, lastName, age, degree, year, semester, courses);
+        }
+    
+        function updateProfileSummary(firstName, lastName, age, degree, year, semester, courses) {
             document.getElementById('fullName').textContent = firstName + ' ' + lastName;
             document.getElementById('ageDisplay').textContent = age;
             document.getElementById('degreeDisplay').textContent = degree;
             document.getElementById('yearDisplay').textContent = year;
             document.getElementById('semesterDisplay').textContent = semester;
-
+    
             var coursesList = document.getElementById('coursesList');
             coursesList.innerHTML = '';
             courses.forEach(function(course) {
@@ -219,12 +239,22 @@
                 li.textContent = course;
                 coursesList.appendChild(li);
             });
-
+    
             document.getElementById('profileSummary').style.display = 'block';
             document.getElementById('profileForm').style.display = 'none';
-
-            return false;
         }
-    </script>
+    
+        function loadProfileData() {
+            var savedData = localStorage.getItem('profileData');
+            if (savedData) {
+                var data = JSON.parse(savedData);
+    
+                updateProfileSummary(data.firstName, data.lastName, data.age, data.degree, data.year, data.semester, data.courses);
+            }
+        }
+    
+        window.onload = loadProfileData;
+    </script>    
+    
 </body>
 </html>
