@@ -38,6 +38,15 @@
             background-color: white;
             color: #000000;
         }
+        .image-upload-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .timetable-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -52,5 +61,24 @@
             <a href="profile.html">Profile</a>
         </div>
     </div>
+
+    <div class="image-upload-container">
+        <label for="imageUpload">Upload Your TimeTable</label><br>
+        <input type="file" id="imageUpload" accept="image/*" onchange="displayImage(this)">
+        <img id="timetableImage" class="timetable-image" />
+    </div>
+
+    <script>
+        function displayImage(input) {
+            var file = input.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('timetableImage').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </body>
 </html>
