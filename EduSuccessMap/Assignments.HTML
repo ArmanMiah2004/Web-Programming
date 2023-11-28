@@ -74,6 +74,15 @@
             border-radius: 3px;
             border: 1px solid #ccc;
         }
+        .delete-assignment {
+            background-color: #FF6347;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
@@ -115,6 +124,7 @@
                 });
             }
         }
+
         function addAssignment(courseIndex) {
             var courseDiv = document.getElementById('course' + courseIndex);
             var assignmentInput = document.createElement('input');
@@ -123,12 +133,18 @@
             var percentageInput = document.createElement('input');
             percentageInput.type = 'text';
             percentageInput.placeholder = '%';
+            var deleteButton = document.createElement('button');
+            deleteButton.className = 'delete-assignment';
+            deleteButton.textContent = '🗑️';
             var assignmentDiv = document.createElement('div');
             assignmentDiv.className = 'assignment';
             assignmentDiv.appendChild(assignmentInput);
             assignmentDiv.appendChild(percentageInput);
+            assignmentDiv.appendChild(deleteButton);
             courseDiv.appendChild(assignmentDiv);
+            deleteButton.onclick = function() { courseDiv.removeChild(assignmentDiv); };
         }
+
         window.onload = loadCourses;
     </script>
 </body>
