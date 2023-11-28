@@ -83,6 +83,9 @@
             cursor: pointer;
             margin-left: 5px;
         }
+        .assignment-input {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
@@ -127,22 +130,33 @@
 
         function addAssignment(courseIndex) {
             var courseDiv = document.getElementById('course' + courseIndex);
-            var assignmentInput = document.createElement('input');
-            assignmentInput.type = 'text';
-            assignmentInput.placeholder = 'Assignment Description';
-            var percentageInput = document.createElement('input');
-            percentageInput.type = 'text';
-            percentageInput.placeholder = '%';
+            var assignmentInput = createInput('Assignment Description', 'text');
+            var dueDateInput = createInput('Due Date', 'date');
+            var percentageInput = createInput('Percentage', 'number');
+            var achievedMarksInput = createInput('Achieved Marks', 'number');
+            var totalMarksInput = createInput('Total Marks', 'number');
             var deleteButton = document.createElement('button');
             deleteButton.className = 'delete-assignment';
             deleteButton.textContent = '🗑️';
+            deleteButton.onclick = function() { courseDiv.removeChild(assignmentDiv); };
+
             var assignmentDiv = document.createElement('div');
             assignmentDiv.className = 'assignment';
             assignmentDiv.appendChild(assignmentInput);
+            assignmentDiv.appendChild(dueDateInput);
             assignmentDiv.appendChild(percentageInput);
+            assignmentDiv.appendChild(achievedMarksInput);
+            assignmentDiv.appendChild(totalMarksInput);
             assignmentDiv.appendChild(deleteButton);
             courseDiv.appendChild(assignmentDiv);
-            deleteButton.onclick = function() { courseDiv.removeChild(assignmentDiv); };
+        }
+
+        function createInput(placeholder, type) {
+            var input = document.createElement('input');
+            input.type = type;
+            input.placeholder = placeholder;
+            input.className = 'assignment-input';
+            return input;
         }
 
         window.onload = loadCourses;
