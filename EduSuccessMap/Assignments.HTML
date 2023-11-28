@@ -47,6 +47,33 @@
             margin: 0;
             font-size: inherit;
         }
+        .course-container {
+            margin: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+        }
+        .course-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .assignment {
+            margin: 5px 0;
+        }
+        .add-assignment {
+            background-color: #1DA1F2;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="text"] {
+            padding: 5px;
+            margin-right: 5px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
@@ -61,5 +88,48 @@
             <a href="profile.html"><button>Profile</button></a>
         </div>
     </div>
+
+    <div id="coursesContainer"></div>
+
+    <script>
+        function loadCourses() {
+            var profileData = localStorage.getItem('profileData');
+            if (profileData) {
+                var data = JSON.parse(profileData);
+                var courses = data.courses;
+                var container = document.getElementById('coursesContainer');
+                courses.forEach(function(course, index) {
+                    var courseDiv = document.createElement('div');
+                    courseDiv.className = 'course-container';
+                    courseDiv.id = 'course' + index;
+                    var title = document.createElement('h3');
+                    title.className = 'course-title';
+                    title.textContent = course;
+                    var addButton = document.createElement('button');
+                    addButton.className = 'add-assignment';
+                    addButton.textContent = '+';
+                    addButton.onclick = function() { addAssignment(index); };
+                    courseDiv.appendChild(title);
+                    courseDiv.appendChild(addButton);
+                    container.appendChild(courseDiv);
+                });
+            }
+        }
+        function addAssignment(courseIndex) {
+            var courseDiv = document.getElementById('course' + courseIndex);
+            var assignmentInput = document.createElement('input');
+            assignmentInput.type = 'text';
+            assignmentInput.placeholder = 'Assignment Description';
+            var percentageInput = document.createElement('input');
+            percentageInput.type = 'text';
+            percentageInput.placeholder = '%';
+            var assignmentDiv = document.createElement('div');
+            assignmentDiv.className = 'assignment';
+            assignmentDiv.appendChild(assignmentInput);
+            assignmentDiv.appendChild(percentageInput);
+            courseDiv.appendChild(assignmentDiv);
+        }
+        window.onload = loadCourses;
+    </script>
 </body>
 </html>
