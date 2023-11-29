@@ -39,13 +39,26 @@
             color: #000000;
             outline: none;
         }
-        .top-banner a button {
-            border: none;
-            background: none;
-            color: inherit;
-            padding: 0;
-            margin: 0;
-            font-size: inherit;
+        .content {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .welcome-message {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .date-info {
+            margin: 20px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .news-section {
+            margin: 20px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
         }
     </style>
 </head>
@@ -55,11 +68,38 @@
             <img src="Logo-Banner.png" alt="Logo Banner">
         </div>
         <div>
-            <a href="Home.html"><button>Home</button></a>
-            <a href="Assignments.html"><button>Assignments</button></a>
-            <a href="Timetable.html"><button>Time-Table</button></a>
-            <a href="Profile.html"><button>Profile</button></a>
+            <a href="Home.html">Home</a>
+            <a href="Assignments.html">Assignments</a>
+            <a href="Timetable.html">Time-Table</a>
+            <a href="Profile.html">Profile</a>
         </div>
     </div>
+
+    <div class="content">
+        <div class="welcome-message">Welcome to Your Online Student Portal!</div>
+
+        <div class="date-info" id="dateInfo">
+        </div>
+
+        <div class="news-section">
+            <h3>Latest News</h3>
+            <p>Stay updated with the latest developments and announcements.</p>
+        </div>
+    </div>
+
+    <script>
+        function updateDateInfo() {
+            const today = new Date();
+            const semesterEndDate = new Date('December 12, 2023');
+            const timeDiff = semesterEndDate - today;
+            const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+            const dateInfo = document.getElementById('dateInfo');
+            dateInfo.innerHTML = `<h3>Today's Date: ${today.toDateString()}</h3>`;
+            dateInfo.innerHTML += `<p>Days left until the semester ends: ${daysLeft} days</p>`;
+        }
+
+        window.onload = updateDateInfo;
+    </script>
 </body>
 </html>
