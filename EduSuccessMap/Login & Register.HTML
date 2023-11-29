@@ -3,6 +3,7 @@
 <head>
     <title>EduSuccessMap</title>
     <style>
+        /* Styles for the body, including background image and layout properties */
         body {
             background-image: url('background.png');
             background-size: cover;
@@ -15,6 +16,7 @@
             margin: 0;
         }
 
+        /* General button styles, including padding, background, and border properties */
         button {
             padding: 10px 20px;
             background-color: transparent;
@@ -25,15 +27,18 @@
             width: 150px;
         }
 
+        /* Hover effect for buttons */
         button:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
 
+        /* Styles for the back button */
         #backButton {
             background-color: transparent;
             border: 2px solid #fff;
         }
 
+        /* Styles for the form, including layout properties */
         form {
             text-align: center;
             display: flex;
@@ -41,6 +46,7 @@
             align-items: center;
         }
 
+        /* Styles for text and password input fields */
         input[type="text"],
         input[type="password"] {
             padding: 10px;
@@ -52,24 +58,29 @@
             display: block;
         }
 
+        /* Styles for the submit and back buttons in the form */
         #submitBtn, #backButton {
             padding: 5px 10px;
             width: 100px;
         }
 
+        /* Style for the back button */
         #backButton {
             background-color: transparent;
             border: 2px solid #fff;
         }
 
+        /* Additional styles for the back button */
         #backButton:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
 
+        /* Style for the message paragraph */
         #message {
             color: white;
         }
 
+        /* Styles for the container of buttons */
         .button-container {
             display: flex;
             justify-content: center;
@@ -78,11 +89,16 @@
     </style>
 </head>
 <body>
+    <!-- Logo image for the application -->
     <img src="EduSuccessMap.png" alt="EduSuccessMap Logo">
+
+    <!-- Container for register and login buttons -->
     <div id="modeToggle" class="button-container">
         <button id="registerButton">Register</button>
         <button id="loginButton">Login</button>
     </div>
+
+    <!-- Form for PIN input, initially hidden -->
     <form id="pinForm" style="display: none;">
         <div style="margin-top: 20px;"></div>
         <input type="text" id="usernameInput" placeholder="Enter username" required><br>
@@ -93,8 +109,14 @@
         </div>
         <input type="hidden" id="registrationMode" value="true">
     </form>
+
+    <!-- Paragraph for displaying messages to the user -->
     <p id="message"></p>
+
     <script>
+        // JavaScript to handle user registration and login
+
+        // Selecting elements from the DOM
         const pinForm = document.getElementById("pinForm");
         const usernameInput = document.getElementById("usernameInput");
         const pinInput = document.getElementById("pinInput");
@@ -104,21 +126,25 @@
         const loginButton = document.getElementById("loginButton");
         const backButton = document.getElementById("backButton");
 
+        // Function to store user data in localStorage
         function storeUserData(username, pin) {
             const userData = JSON.parse(localStorage.getItem('userData')) || {};
             userData[username] = pin;
             localStorage.setItem('userData', JSON.stringify(userData));
         }
 
+        // Function to check if username already exists
         function usernameExists(username) {
             const userData = retrieveUserData();
             return userData.hasOwnProperty(username);
         }
 
+        // Function to retrieve user data from localStorage
         function retrieveUserData() {
             return JSON.parse(localStorage.getItem('userData')) || {};
         }
 
+        // Event listener for register button
         registerButton.addEventListener("click", function () {
             pinForm.style.display = "block";
             registrationModeInput.value = "true";
@@ -128,6 +154,7 @@
             backButton.style.display = "block";
         });
 
+        // Event listener for login button
         loginButton.addEventListener("click", function () {
             pinForm.style.display = "block";
             registrationModeInput.value = "false";
@@ -137,6 +164,7 @@
             backButton.style.display = "block";
         });
 
+        // Event listener for back button
         backButton.addEventListener("click", function (e) {
             e.preventDefault();
             pinForm.style.display = "none";
@@ -149,6 +177,7 @@
             backButton.style.display = "none";
         });
 
+        // Event listener for form submission
         pinForm.addEventListener("submit", function (e) {
             e.preventDefault();
             const username = usernameInput.value;

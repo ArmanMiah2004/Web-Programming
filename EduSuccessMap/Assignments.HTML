@@ -3,12 +3,14 @@
 <head>
     <title>Assignments</title>
     <style>
+        /* Styles for the body of the document */
         body {
             background-color: #afafaf;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
         }
+         /* Styles for the top banner */       
         .top-banner {
             background-color: #000000;
             color: white;
@@ -17,10 +19,12 @@
             align-items: center;
             justify-content: space-between;
         }
+        /* Styles for the logo inside the top banner */
         .top-banner .logo img {
             height: 50px;
             vertical-align: middle;
         }
+        /* Styles for the navigation links */
         .top-banner a {
             background: none;
             border: 1px solid white;
@@ -33,12 +37,14 @@
             font-size: 16px;
             display: inline-block;
         }
+        /* Hover and focus styles for the navigation links */
         .top-banner a:hover,
         .top-banner a:focus {
             background-color: white;
             color: #000000;
             outline: none;
         }
+        /* Styles for buttons within the navigation links */
         .top-banner a button {
             border: none;
             background: none;
@@ -47,19 +53,23 @@
             margin: 0;
             font-size: inherit;
         }
+        /* Styles for the main course container */
         .course-container {
             margin: 20px;
             padding: 15px;
             background-color: white;
             border-radius: 8px;
         }
+        /* Styles for the course titles */
         .course-title {
             font-size: 20px;
             margin-bottom: 10px;
         }
+        /* Styles for the individual assignments */
         .assignment {
             margin: 5px 0;
         }
+        /* Styles for the 'add assignment' button */
         .add-assignment {
             background-color: #1DA1F2;
             color: white;
@@ -68,12 +78,14 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        /* Styles for text input fields */
         input[type="text"] {
             padding: 5px;
             margin-right: 5px;
             border-radius: 3px;
             border: 1px solid #ccc;
         }
+        /* Styles for the 'delete assignment' button */
         .delete-assignment {
             background-color: #FF6347;
             color: white;
@@ -83,17 +95,20 @@
             cursor: pointer;
             margin-left: 5px;
         }
+        /* Styles for the input fields in assignments */
         .assignment-input {
             margin-right: 5px;
         }
     </style>
 </head>
 <body>
+    <!-- Top banner section containing the logo and navigation links -->
     <div class="top-banner">
         <div class="logo">
             <img src="Logo-Banner.png" alt="Logo Banner">
         </div>
         <div>
+            <!-- Navigation links as buttons -->
             <a href="home.html"><button>Home</button></a>
             <a href="assignments.html"><button>Assignments</button></a>
             <a href="timetable.html"><button>Time-Table</button></a>
@@ -101,9 +116,12 @@
         </div>
     </div>
 
+    <!-- Container for dynamically loaded course content -->
     <div id="coursesContainer"></div>
 
+    <!-- JavaScript for dynamic content and interaction -->
     <script>
+        // Function to load and display courses
         function loadCourses() {
             var profileData = localStorage.getItem('profileData');
             if (profileData) {
@@ -128,7 +146,8 @@
                 loadAssignments();
             }
         }
-    
+
+        // Function to add a new assignment to a course
         function addAssignment(courseIndex) {
             var courseDiv = document.getElementById('course' + courseIndex);
             var assignmentInput = createInput('Assignment Description', 'text');
@@ -160,7 +179,8 @@
             courseDiv.appendChild(assignmentDiv);
             saveAssignments();
         }
-    
+
+        // Helper function to create an input element
         function createInput(placeholder, type) {
             var input = document.createElement('input');
             input.type = type;
@@ -168,7 +188,8 @@
             input.className = 'assignment-input';
             return input;
         }
-    
+
+        // Function to save the current state of assignments
         function saveAssignments() {
             var assignments = {};
             var courses = document.querySelectorAll('.course-container');
@@ -191,7 +212,8 @@
             });
             localStorage.setItem('assignments', JSON.stringify(assignments));
         }
-    
+
+        // Function to load and display assignments from local storage
         function loadAssignments() {
             var savedAssignments = localStorage.getItem('assignments');
             if (savedAssignments) {
@@ -237,7 +259,8 @@
                 }
             }
         }
-    
+
+        // Initial function call when the window loads
         window.onload = loadCourses;
     </script>    
 </body>

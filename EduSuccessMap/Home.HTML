@@ -3,12 +3,14 @@
 <head>
     <title>Main Menu</title>
     <style>
+        /* General style for the body of the page, including background color, margins, padding, and font */       
         body {
             background-color: #afafaf;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
         }
+        /* Style for the top navigation banner */
         .top-banner {
             background-color: #000000;
             color: white;
@@ -17,10 +19,12 @@
             align-items: center;
             justify-content: space-between;
         }
+        /* Style for the logo inside the top banner */
         .top-banner .logo img {
             height: 50px;
             vertical-align: middle;
         }
+        /* Style for navigation links in the top banner */
         .top-banner a {
             background: none;
             border: 1px solid white;
@@ -33,20 +37,24 @@
             font-size: 16px;
             display: inline-block;
         }
+        /* Style changes for navigation links on hover and focus */
         .top-banner a:hover,
         .top-banner a:focus {
             background-color: white;
             color: #000000;
             outline: none;
         }
+        /* Style for the main content section */
         .content {
             text-align: center;
             margin-top: 20px;
         }
+        /* Style for the welcome message */
         .welcome-message {
             font-size: 24px;
             margin-bottom: 20px;
         }
+        /* Style for the date information section */
         .date-info {
             margin: 20px;
             padding: 10px;
@@ -54,6 +62,7 @@
             border-radius: 8px;
             text-align: center;
         }
+        /* Style for the news section */
         .news-section {
             margin: 20px;
             padding: 10px;
@@ -65,9 +74,11 @@
 <body>
     <div class="top-banner">
         <div class="logo">
+            <!-- Logo image for the banner -->
             <img src="Logo-Banner.png" alt="Logo Banner">
         </div>
         <div>
+            <!-- Navigation links -->
             <a href="Home.html">Home</a>
             <a href="Assignments.html">Assignments</a>
             <a href="Timetable.html">Time-Table</a>
@@ -76,11 +87,14 @@
     </div>
 
     <div class="content">
+        <!-- Welcome message for users -->
         <div class="welcome-message">Welcome to Your Online Student Portal!</div>
 
+        <!-- Container for date information, dynamically updated by script -->
         <div class="date-info" id="dateInfo">
         </div>
 
+        <!-- News section for latest updates -->
         <div class="news-section">
             <h3>Latest News</h3>
             <p>Stay updated with the latest developments and announcements.</p>
@@ -88,17 +102,19 @@
     </div>
 
     <script>
+        // Function to update and display date information
         function updateDateInfo() {
             const today = new Date();
             const semesterEndDate = new Date('December 12, 2023');
             const timeDiff = semesterEndDate - today;
             const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
+            // Displaying the date information on the page
             const dateInfo = document.getElementById('dateInfo');
             dateInfo.innerHTML = `<h3>Today's Date: ${today.toDateString()}</h3>`;
             dateInfo.innerHTML += `<p>Days left until the semester ends: ${daysLeft} days</p>`;
         }
-
+        // Calling updateDateInfo function when window loads
         window.onload = updateDateInfo;
     </script>
 </body>

@@ -3,12 +3,15 @@
 <head>
     <title>Time-Table</title>
     <style>
+        /* General styles for the body */
         body {
             background-color: #afafaf;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
         }
+
+        /* Styles for the top navigation banner */
         .top-banner {
             background-color: #000000;
             color: white;
@@ -17,10 +20,14 @@
             align-items: center;
             justify-content: space-between;
         }
+
+        /* Style for the logo inside the top banner */
         .top-banner .logo img {
             height: 50px;
             vertical-align: middle;
         }
+
+        /* Styles for navigation links in the top banner */
         .top-banner a {
             color: white;
             padding: 8px 15px;
@@ -33,15 +40,21 @@
             display: inline-block;
             transition: background-color 0.3s, color 0.3s;
         }
+
+        /* Hover and focus effects for navigation links */
         .top-banner a:hover,
         .top-banner a:focus {
             background-color: white;
             color: #000000;
         }
+
+        /* Style for the container of image upload section */
         .image-upload-container {
             text-align: center;
             margin-top: 20px;
         }
+
+        /* Style for the timetable image */
         .timetable-image {
             max-width: 100%;
             height: auto;
@@ -55,6 +68,7 @@
             <img src="Logo-Banner.png" alt="Logo Banner">
         </div>
         <div>
+            <!-- Navigation links -->
             <a href="home.html">Home</a>
             <a href="assignments.html">Assignments</a>
             <a href="timetable.html">Time-Table</a>
@@ -64,31 +78,39 @@
 
     <div class="image-upload-container">
         <label for="imageUpload">Upload Your TimeTable</label><br>
+        <!-- Input field for file upload -->
         <input type="file" id="imageUpload" accept="image/*" onchange="handleImageUpload(this)">
+        <!-- Display of uploaded timetable image -->
         <img id="timetableImage" class="timetable-image" />
     </div>
 
     <script>
+        // Function to handle image upload
         function handleImageUpload(input) {
             var file = input.files[0];
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     var imageUrl = e.target.result;
+                    // Display the uploaded image
                     document.getElementById('timetableImage').src = imageUrl;
+                    // Store the image URL in local storage
                     localStorage.setItem('timetableImage', imageUrl);
                 };
                 reader.readAsDataURL(file);
             }
         }
 
+        // Function to load saved image from local storage
         function loadSavedImage() {
             var savedImage = localStorage.getItem('timetableImage');
             if (savedImage) {
+                // Display the saved image
                 document.getElementById('timetableImage').src = savedImage;
             }
         }
 
+        // Load saved image when the window loads
         window.onload = loadSavedImage;
     </script>
 </body>

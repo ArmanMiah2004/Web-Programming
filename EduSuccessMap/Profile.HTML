@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
     <style>
+        /* General styles for the body */
         body {
             background-color: #afafaf;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
         }
+
+        /* Styles for the top navigation banner */
         .top-banner {
             background-color: #000000;
             color: white;
@@ -19,10 +22,14 @@
             align-items: center;
             justify-content: space-between;
         }
+
+        /* Style for the logo inside the top banner */
         .top-banner .logo img {
             height: 50px;
             vertical-align: middle;
         }
+
+        /* Styles for navigation links in the top banner */
         .top-banner a {
             color: white;
             padding: 8px 15px;
@@ -35,17 +42,25 @@
             display: inline-block;
             transition: background-color 0.3s, color 0.3s;
         }
+
+        /* Hover and focus effects for navigation links */
         .top-banner a:hover,
         .top-banner a:focus {
             background-color: white;
             color: #000000;
         }
+
+        /* Styles to hide questions initially */
         .question {
             display: none;
         }
+
+        /* Style to show active question */
         .question.active {
             display: block; 
         }
+
+        /* General button styles */
         .button {
             padding: 10px 20px;
             margin: 5px;
@@ -55,12 +70,18 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        /* Style for selected button */
         .button.selected {
             background-color: #004B8D;
         }
+
+        /* Style for the row of buttons */
         .button-row {
             margin-top: 10px;
         }
+
+        /* Style for the profile summary section */
         .profile-summary {
             display: none;
             background-color: #ffffff;
@@ -69,9 +90,13 @@
             margin-top: 20px;
             width: 300px;
         }
+
+        /* Style for the profile summary heading */
         .profile-summary h2 {
             margin: 0 0 10px 0;
         }
+
+        /* Style for individual profile details */
         .profile-detail {
             margin-bottom: 10px;
         }
@@ -83,6 +108,7 @@
             <img src="Logo-Banner.png" alt="Logo Banner">
         </div>
         <div>
+            <!-- Navigation links -->
             <a href="home.html">Home</a>
             <a href="assignments.html">Assignments</a>
             <a href="timetable.html">Time-Table</a>
@@ -90,6 +116,7 @@
         </div>
     </div>
 
+    <!-- Form for user profile information -->
     <form id="profileForm" onsubmit="return displayProfileSummary()">
         <div class="question active" id="q1">
             <label for="first-name">First Name:</label>
@@ -170,6 +197,9 @@
     </div>
 
     <script>
+        // JavaScript functions for handling form submission and displaying profile summary
+
+        // Function to show specific question section
         function showQuestion(number) {
             var questions = document.querySelectorAll('.question');
             for (var i = 0; i < questions.length; i++) {
@@ -177,7 +207,8 @@
             }
             document.getElementById('q' + number).classList.add('active');
         }
-    
+
+        // Function to handle option selection and highlighting
         function selectOption(field, value) {
             var buttons = document.querySelectorAll('.button.' + field);
             buttons.forEach(function(button) {
@@ -189,7 +220,8 @@
                 selectedButton.classList.add('selected');
             }
         }
-    
+
+        // Function to display profile summary based on form input
         function displayProfileSummary() {
             event.preventDefault();
     
@@ -210,7 +242,8 @@
     
             return false;
         }
-    
+
+        // Function to save form data to local storage and update the profile summary
         function saveAndDisplayData(firstName, lastName, age, degree, year, semester, courses) {
             localStorage.setItem('profileData', JSON.stringify({
                 firstName: firstName,
@@ -224,7 +257,8 @@
     
             updateProfileSummary(firstName, lastName, age, degree, year, semester, courses);
         }
-    
+
+        // Function to update the profile summary on the page
         function updateProfileSummary(firstName, lastName, age, degree, year, semester, courses) {
             document.getElementById('fullName').textContent = firstName + ' ' + lastName;
             document.getElementById('ageDisplay').textContent = age;
@@ -243,7 +277,8 @@
             document.getElementById('profileSummary').style.display = 'block';
             document.getElementById('profileForm').style.display = 'none';
         }
-    
+ 
+        // Function to load saved profile data and display the summary
         function loadProfileData() {
             var savedData = localStorage.getItem('profileData');
             if (savedData) {
@@ -252,7 +287,8 @@
                 updateProfileSummary(data.firstName, data.lastName, data.age, data.degree, data.year, data.semester, data.courses);
             }
         }
-    
+
+        // Loading profile data when the window loads
         window.onload = loadProfileData;
     </script>    
     
